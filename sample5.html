@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <h1>フォグ</h1>
+ フォグを設定した。<br>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
+
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+        // 背景の色を設定
+        renderer.setClearColor(0xf2f2f2);
+
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+        {
+            const color = 0xf2f2f2;
+            const near = 1;
+            const far = 10;
+            scene.fog = new THREE.Fog(color, near, far);
+        }
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 5);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.position.set(-10, -10, 10);
+        // シーンに追加
+        scene.add(directionalLight2);
+
+        // 玉を作成
+        for (let i = 0; i < 1000; i++) {
+            const geometry = new THREE.SphereGeometry( 0.1, 64, 64 );
+            const material = new THREE.MeshPhongMaterial( {color: 0x0000ff} );
+            const sphere = new THREE.Mesh( geometry, material );
+            sphere.position.set(10*Math.random()-10*Math.random(),10*Math.random()-10*Math.random(),10*Math.random()-10*Math.random());
+
+            scene.add( sphere );
+        }
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+            // レンダリング
+            renderer.render(scene, camera);
+            requestAnimationFrame(update);
+
+        }
+      }
+    </script>
+</body>
