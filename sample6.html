@@ -7,7 +7,7 @@
 <body>
  <h1>最終作品</h1>
  地球と月と星を作成した。<br>
- フォグ、テクスチャを設定した。<br>
+ フォグ、テクスチャを設定した。月にはバンプマップをしている。<br>
  月の上に猫型のロボットを配置した。<br>
  <script>
       // ページの読み込みを待つ
@@ -81,7 +81,7 @@
         // バンプマップ読み込み
         var bump = textureLoader.load("moon-bump.jpg");
         MOON.bumpMap = bump;
-        MOON.bumpscale = 0.2;
+        MOON.bumpscale = 0.4;
 
         // 月を作成
         const moon = new THREE.Mesh(
@@ -308,6 +308,7 @@
         r_ude.add(rarm); // 右腕を追加 
         r_ude.add(r_hand); // 右手を追加
 
+        //腕をあげている
         r_ude.rotation.x = -2;
         r_ude.position.y = -0.35
         r_ude.position.z = -0.2
@@ -329,7 +330,7 @@
         const Moon = new THREE.Group();
         Moon.add(moon);
         Moon.add(doraemon); // ドラえもんを追加
-        Moon.position.set(0,0,-500);//全体グループの原点の位置
+        Moon.position.set(0,0,-500);
         scene.add(Moon); 
 
         const all = new THREE.Group();
